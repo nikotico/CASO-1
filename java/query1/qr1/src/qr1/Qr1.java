@@ -36,6 +36,7 @@ public class Qr1 {
         ResultSet set = sta.executeQuery("exec qr1 @canton =  "+canton);
         System.out.println(hilo+","+canton+":");
         while (set.next()){
+            
             int cantEntreg = set.getInt("Entregables");
             String  part = set.getString("Partido");
             
@@ -47,7 +48,6 @@ public class Qr1 {
     
     
     public static void main(String[] args) throws SQLException, InterruptedException {
-        System.out.println("Hola");
         conectar();
         
         Thread hilo0 = new Hilos("hilo 0","Alajuela");
@@ -61,8 +61,9 @@ public class Qr1 {
         Thread hilo8 = new Hilos("hilo 8","Alajuela");
         Thread hilo9 = new Hilos("hilo 9","Grecia");
         
+        //El hilo nueve hace un sleep 2 de segundos para dale chance al procedor de ejecutar todo
+        
         long startTime = System.nanoTime();
-       
         hilo0.start();
         hilo1.start();
         hilo2.start();
@@ -81,5 +82,103 @@ public class Qr1 {
         System.out.printf("Duracion de los 10 hilos : %.2f \n", (duration / 1000000));
 
         //Duracion media de un JBDC + SP en JAVA : 0.56 mili
+        /*
+            Los datos pueden cambiar ya que al incertar los datos, los entregables se dan aleatorios, el unico que no cambia es grecia
+            ese esta forzado a tener 1 solo entregable, esto por efecto de pruebas en el query 2
+        
+            Duracion de los 10 hilos : 0,53 
+
+            hilo 0,Alajuela:
+            Partido: PAC                                                                                                                                                                                                                                                             
+             Entregables: 1 
+
+            Partido: PLN                                                                                                                                                                                                                                                             
+             Entregables: 1 
+
+            Partido: PSD                                                                                                                                                                                                                                                             
+             Entregables: 2 
+        
+            hilo 1,Grecia:
+            Partido: PSD                                                                                                                                                                                                                                                             
+             Entregables: 1 
+
+            hilo 9,Grecia:
+            Partido: PSD                                                                                                                                                                                                                                                             
+             Entregables: 1 
+
+            hilo 2,Naranjo:
+            Partido: PAC                                                                                                                                                                                                                                                             
+             Entregables: 2 
+
+            Partido: PLN                                                                                                                                                                                                                                                             
+             Entregables: 2 
+
+            Partido: PSD                                                                                                                                                                                                                                                             
+             Entregables: 1 
+
+            Partido: PUSC                                                                                                                                                                                                                                                            
+             Entregables: 2 
+            
+            hilo 8,Alajuela:
+            Partido: PAC                                                                                                                                                                                                                                                             
+             Entregables: 1 
+        
+            Partido: PLN                                                                                                                                                                                                                                                             
+             Entregables: 1 
+
+            Partido: PSD                                                                                                                                                                                                                                                             
+             Entregables: 2 
+
+            hilo 7,Atenas:
+            Partido: PAC                                                                                                                                                                                                                                                             
+             Entregables: 1 
+
+            Partido: PLN                                                                                                                                                                                                                                                             
+             Entregables: 2 
+
+            Partido: PUSC                                                                                                                                                                                                                                                            
+             Entregables: 1 
+
+            hilo 6,Naranjo:
+            Partido: PAC                                                                                                                                                                                                                                                             
+             Entregables: 2 
+
+            Partido: PLN                                                                                                                                                                                                                                                             
+             Entregables: 2 
+
+            Partido: PSD                                                                                                                                                                                                                                                             
+             Entregables: 1 
+
+            Partido: PUSC                                                                                                                                                                                                                                                            
+             Entregables: 2 
+
+            hilo 5,Grecia:
+            Partido: PSD                                                                                                                                                                                                                                                             
+             Entregables: 1 
+
+            hilo 3,Atenas:
+            Partido: PAC                                                                                                                                                                                                                                                             
+             Entregables: 1 
+
+            Partido: PLN                                                                                                                                                                                                                                                             
+             Entregables: 2 
+
+            Partido: PUSC                                                                                                                                                                                                                                                            
+             Entregables: 1 
+
+            hilo 4,Alajuela:
+            Partido: PAC                                                                                                                                                                                                                                                             
+             Entregables: 1 
+
+            Partido: PLN                                                                                                                                                                                                                                                             
+             Entregables: 1 
+
+            Partido: PSD                                                                                                                                                                                                                                                             
+             Entregables: 2 
+
+            BUILD SUCCESSFUL (total time: 3 seconds)
+
+
+        */
     }
 }
