@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model Action {
+  id             Int              @id(map: "PK__Action__3213E83F5FBA28DD") @default(autoincrement())
+  name           String           @db.Char(255)
+  ActionsPerPlan ActionsPerPlan[]
+  Deliverable    Deliverable[]
+}
+
+model ActionsPerPlan {
+  id        Int    @id(map: "PK__ActionsP__3213E83F172BFF8E") @default(autoincrement())
+  action_id Int
+  plan_id   Int
+  Action    Action @relation(fields: [action_id], references: [id], onUpdate: NoAction, map: "FK__ActionsPe__actio__3E52440B")
+  Plan      Plan   @relation(fields: [plan_id], references: [id], onUpdate: NoAction, map: "FK__ActionsPe__plan___3F466844")
+}
+
+model Canton {
+  id           Int            @id(map: "PK__Canton__3213E83FAE6C78DD") @default(autoincrement())
+  name         String         @db.Char(255)
+  DelivPerCant DelivPerCant[]
+}
+
+model Deliverable {
+  id           Int            @id(map: "PK__Delivera__3213E83F263D2912") @default(autoincrement())
+  detail       String         @db.Char(600)
+  kpiCant      Int
+  kpi_type     Int
+  action_id    Int
+  ready_date   DateTime       @db.Date
+  createBy     Int
+  Action       Action         @relation(fields: [action_id], references: [id], onUpdate: NoAction, map: "FK__Deliverab__actio__3B75D760")
+  Userr        Userr          @relation(fields: [createBy], references: [id], onUpdate: NoAction, map: "FK__Deliverab__creat__398D8EEE")
+  KpiXType     KpiXType       @relation(fields: [kpi_type], references: [id], onUpdate: NoAction, map: "FK__Deliverab__kpi_t__3A81B327")
+  DelivPerCant DelivPerCant[]
+}
+
+model DelivPerCant {
+  id          Int         @id(map: "PK__DelivPer__3213E83F9C568AC3") @default(autoincrement())
+  deli_id     Int
+  canton_id   Int
+  Canton      Canton      @relation(fields: [canton_id], references: [id], onUpdate: NoAction, map: "FK__DelivPerC__canto__412EB0B6")
+  Deliverable Deliverable @relation(fields: [deli_id], references: [id], onUpdate: NoAction, map: "FK__DelivPerC__deli___403A8C7D")
+}
+
+model KpiXType {
+  id          Int           @id(map: "PK__KpiXType__3213E83FEEE72706") @default(autoincrement())
+  ente        String        @db.Char(255)
+  Deliverable Deliverable[]
+}
+
+model Party {
+  id            Int             @id(map: "PK__Party__3213E83FBE30B9F1") @default(autoincrement())
+  name          String          @db.Char(255)
+  flag_path     String?         @db.Char(255)
+  PlansPerParty PlansPerParty[]
+  Userr         Userr[]
+}
+
+model Plan {
+  id             Int              @id(map: "PK__Plan__3213E83FB1D0B2DC") @default(autoincrement())
+  name           String           @db.Char(255)
+  ActionsPerPlan ActionsPerPlan[]
+  PlansPerParty  PlansPerParty[]
+}
+
+model PlansPerParty {
+  id       Int   @id(map: "PK__PlansPer__3213E83FC97BBAFB") @default(autoincrement())
+  party_id Int
+  plan_id  Int
+  Party    Party @relation(fields: [party_id], references: [id], onUpdate: NoAction, map: "FK__PlansPerP__party__3C69FB99")
+  Plan     Plan  @relation(fields: [plan_id], references: [id], onUpdate: NoAction, map: "FK__PlansPerP__plan___3D5E1FD2")
+}
+
+model RoleUser {
+  id    Int     @id(map: "PK__RoleUser__3213E83F536ECC47") @default(autoincrement())
+  type  String  @db.Char(25)
+  Userr Userr[]
+}
+
+model Userr {
+  id          Int           @id(map: "PK__Userr__3213E83F8F8A9982") @default(autoincrement())
+  user_type   Int
+  party_id    Int
+  name        String        @db.Char(25)
+  photo_path  String?       @db.Char(255)
+  bio         String        @db.Char(255)
+  Party       Party         @relation(fields: [party_id], references: [id], onUpdate: NoAction, map: "FK__Userr__party_id__38996AB5")
+  RoleUser    RoleUser      @relation(fields: [user_type], references: [id], onUpdate: NoAction, map: "FK__Userr__user_type__37A5467C")
+  Deliverable Deliverable[]
+}
