@@ -1,7 +1,6 @@
 
 package qr2;
 
-import com.sun.tools.javac.Main;
 import java.sql.*;
 import javax.sql.PooledConnection;
 import com.microsoft.sqlserver.jdbc.SQLServerXADataSource;
