@@ -19,16 +19,15 @@ using Microsoft.Data.SqlClient;
 //"Server=***;Initial Catalog=***;Persist Security Info=False;User  ID=***;Password=***;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=False;Connection Timeout=30;";
 
 function.Main();
-public static class Globals
+public class Globals
 {
-    public static string connString = @"Server=NIKOF;Initial Catalog=aseni;Persist Security Info=False;User ID=sa;Password=admin;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=False;Connection Timeout=30;";
-    public static SqlConnection conn = null;
-    public static SqlCommand cmd = null;
+    public string connString = @"Server=NIKOF;Initial Catalog=aseni;Persist Security Info=False;User ID=sa;Password=admin;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=False;Connection Timeout=30;";
+    public SqlConnection conn = null;
+    public SqlCommand cmd = null;
 }
 /*
 Explicacion al final
-El tiempo promedio es de 3080 ms, pero tengo que tener en cuenta que hago sleeps de 300 milisegundos
-Entonces restando ese tiempo tengo que la duracion es de 0.80 milisegundos
+El tiempo promedio es de 1,4 ms
 */
 public static class function
 {
@@ -51,25 +50,16 @@ public static class function
         timeMeasure.Start();
 
         t0.Start();
-        Thread.Sleep(300);//Sin esto las conecciones se pierden y se realiza la consulta
         t1.Start();
-        Thread.Sleep(300);//Sin esto las conecciones se pierden y se realiza la consulta
         t2.Start();
-        Thread.Sleep(300);//Sin esto las conecciones se pierden y se realiza la consulta
         t3.Start();
-        Thread.Sleep(300);//Sin esto las conecciones se pierden y se realiza la consulta
         t4.Start();
-        Thread.Sleep(300);//Sin esto las conecciones se pierden y se realiza la consulta
         t5.Start();
-        Thread.Sleep(300);//Sin esto las conecciones se pierden y se realiza la consulta
         t6.Start();
-        Thread.Sleep(300);//Sin esto las conecciones se pierden y se realiza la consulta
         t7.Start();
-        Thread.Sleep(300);//Sin esto las conecciones se pierden y se realiza la consulta
         t8.Start();
-        Thread.Sleep(300);//Sin esto las conecciones se pierden y se realiza la consulta
         t9.Start();
-        Thread.Sleep(300);//Sin esto las conecciones se pierden y se realiza la consulta
+
         timeMeasure.Stop();
         Console.WriteLine($"Tiempo: {timeMeasure.Elapsed.TotalMilliseconds} ms");
 
@@ -78,24 +68,26 @@ public static class function
 
     public static void consulta()
     {
+
+        Globals instance = new Globals();
         Random rnd = new Random();
         List<string> cantones = new List<string>() { "Naranjo", "Alajuela", "Grecia", "Atenas" };
         string canton = cantones[rnd.Next(0, 3)];
         Console.WriteLine(canton + "\n");
         try
         {
-            using (Globals.conn = new SqlConnection(Globals.connString))//Se habre la connection)
+            using (instance.conn = new SqlConnection(instance.connString))//Se habre la connection)
             {
                 //retrieve the SQL Server instance version
                 string query = @"exec qr1 @canton = " + canton;
 
-                Globals.cmd = new SqlCommand(query, Globals.conn);
+                instance.cmd = new SqlCommand(query, instance.conn);
 
                 //open connection
-                Globals.conn.Open();
+                instance.conn.Open();
 
                 //execute the SQLCommand
-                SqlDataReader dr = Globals.cmd.ExecuteReader();
+                SqlDataReader dr = instance.cmd.ExecuteReader();
 
                 //check if there are records
                 if (dr.HasRows)
@@ -125,7 +117,7 @@ public static class function
     /*
     C:\Users\fgm_o\Documentos\TEC\5 Semestre\Bases ll\Caso #1\net\qr1>dotnet run
 
-    Tiempo: 3077,4217 ms
+    Tiempo: 1,3888 ms
     Naranjo
 
     PAC     2
