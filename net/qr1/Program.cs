@@ -21,7 +21,8 @@ using Microsoft.Data.SqlClient;
 function.Main();
 public class Globals
 {
-    public string connString = @"Server=NIKOF;Initial Catalog=aseni;Persist Security Info=False;User ID=sa;Password=admin;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=False;Connection Timeout=30;";
+    public string connString = @"Server=NIKOF;Initial Catalog=aseni;Persist Security Info=False;User ID=sa;Password=admin;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=False;Connection Timeout=30;
+    Pooling=false;";
     public SqlConnection conn = null;
     public SqlCommand cmd = null;
 }

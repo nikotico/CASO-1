@@ -24,7 +24,7 @@ public class qr2Pool {
         Thread hilo9 = new Hilos("hilo 9");
 
         
-        //El hilo nueve hace un sleep 2 de segundos para dale chance al procedor de ejecutar todo
+        //El hilo 9 hace un sleep 2 de segundos para dale tiempo al procedor de ejecutar/crear todos los hilos
         
         long startTime = System.nanoTime();
         
@@ -38,7 +38,6 @@ public class qr2Pool {
         hilo7.start();
         hilo8.start();
         hilo9.start();
-        
         
         long endTime = System.nanoTime();
         
@@ -97,7 +96,7 @@ public class qr2Pool {
  
  /*
  Salida del documento
- Duracion de los 10 hilos : 0,58
+ Duracion de los 10 hilos : 0,51
 mar. 01, 2022 4:06:01 P. M. com.mchange.v2.log.MLog 
 INFO: MLog clients using java 1.4+ standard logging.
 mar. 01, 2022 4:06:01 P. M. com.mchange.v2.c3p0.C3P0Registry 
