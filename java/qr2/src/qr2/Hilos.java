@@ -18,7 +18,8 @@ public class Hilos  extends Thread  {
     }
     
     public void Thconsulta() throws SQLException{
-        Qr2.consultaPool();
+        qr2Pool c = new qr2Pool();
+        c.consulta();
     }
     
     public void run(){

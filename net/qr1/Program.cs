@@ -63,7 +63,6 @@ public static class function
         timeMeasure.Stop();
         Console.WriteLine($"Tiempo: {timeMeasure.Elapsed.TotalMilliseconds} ms");
 
-
     }
 
     public static void consulta()
