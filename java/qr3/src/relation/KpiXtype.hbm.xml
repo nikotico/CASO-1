@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28-feb-2022 23:44:09 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="relation.KpiXtype" table="KpiXType" schema="dbo" catalog="aseni" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="ente" type="string">
+            <column name="ente" not-null="true" />
+        </property>
+        <set name="deliverables" table="Deliverable" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="kpi_type" not-null="true" />
+            </key>
+            <one-to-many class="relation.Deliverable" />
+        </set>
+    </class>
+</hibernate-mapping>

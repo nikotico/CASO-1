@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28-feb-2022 23:44:09 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="relation.Deliverable" table="Deliverable" schema="dbo" catalog="aseni" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="action" class="relation.Action" fetch="select">
+            <column name="action_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="kpiXtype" class="relation.KpiXtype" fetch="select">
+            <column name="kpi_type" not-null="true" />
+        </many-to-one>
+        <many-to-one name="party" class="relation.Party" fetch="select">
+            <column name="plan_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="userr" class="relation.Userr" fetch="select">
+            <column name="createBy" not-null="true" />
+        </many-to-one>
+        <property name="detail" type="string">
+            <column name="detail" length="600" not-null="true" />
+        </property>
+        <property name="kpiCant" type="int">
+            <column name="kpiCant" not-null="true" />
+        </property>
+        <property name="readyDate" type="date">
+            <column name="ready_date" length="10" not-null="true" />
+        </property>
+        <set name="delivPerCants" table="DelivPerCant" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="deli_id" not-null="true" />
+            </key>
+            <one-to-many class="relation.DelivPerCant" />
+        </set>
+    </class>
+</hibernate-mapping>
