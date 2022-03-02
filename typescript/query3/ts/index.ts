@@ -30,57 +30,105 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
+function comentarios(){
+
+        /*
+      typescript\query3\ts>npx ts-node index.ts
+      el pool lo ajusto en .env
+      Query 3 MAX 
+  [
+    {
+      Partido: 'PAC
+                                                                                                        ',
+      Accion: 'Soporte tecnologico con computadoras
+                                                                                                       ',
+      Canton: 'Alajuela
+                                                                                                       ',
+      'Cant Kpi Entregables': 96
+    },
+    {
+      Partido: 'PLN
+                                                                                                        ',
+      Accion: 'Asfaltado o restauracion de las carretera
+                                                                                                       ',
+      Canton: 'Naranjo
+                                                                                                       ',
+      'Cant Kpi Entregables': 82
+    },
+    {
+      Partido: 'PSD
+                                                                                                        ',
+      Accion: 'Plantar arboles en zonas publicas
+                                                                                                       ',
+      Canton: 'Naranjo
+                                                                                                       ',
+      'Cant Kpi Entregables': 59
+    },
+    {
+      Partido: 'PUSC
+                                                                                                        ',
+      Accion: 'Entrega de libros a la diferentes escuelas
+                                                                                                       ',
+      Canton: 'Naranjo
+                                                                                                       ',
+      'Cant Kpi Entregables': 92
+    }
+  ]
+  
+        Query 3 MIN 
+  [
+    {
+      Partido: 'PAC
+                                                                                                        ',
+      Accion: 'Soporte tecnologico con computadoras
+                                                                                                       ',
+      Canton: 'Atenas
+                                                                                                       ',
+      'Cant Kpi Entregables': 83
+    },
+    {
+      Partido: 'PLN
+                                                                                                        ',
+      Accion: 'Asfaltado o restauracion de las carretera
+                                                                                                       ',
+      Canton: 'Alajuela
+                                                                                                       ',
+      'Cant Kpi Entregables': 53
+    },
+    {
+      Partido: 'PSD
+                                                                                                        ',
+      Accion: 'Plantar arboles en zonas publicas
+                                                                                                       ',
+      Canton: 'Grecia
+                                                                                                       ',
+      'Cant Kpi Entregables': 3
+    },
+    {
+      Partido: 'PUSC
+                                                                                                        ',
+      Accion: 'Entrega de libros a la diferentes escuelas
+                                                                                                       ',
+      Canton: 'Atenas
+                                                                                                       ',
+      'Cant Kpi Entregables': 71
+    }
+    loop: 60.974ms
+  ]
+    */
+}
 async function main() {
     /*
         Consultas https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#prismaclient
         los objetos tiene que llarse en minuscula
    */
 
-    let prisma1 = new PrismaClient()
-    let prisma2 = new PrismaClient()
-    let prisma3 = new PrismaClient()
-    let prisma4 = new PrismaClient()
-    let prisma5 = new PrismaClient()
-    let prisma6 = new PrismaClient()
-    let prisma7 = new PrismaClient()
-    let prisma8 = new PrismaClient()
-    let prisma9 = new PrismaClient()
-    let prisma10 = new PrismaClient()
-    let prisma11 = new PrismaClient()
-
-    //const dc = await prisma.delivPerCant.canton.findMany();
-
-    const sql = await prisma11.delivPerCant.findMany({
-        select: {
-            id: false,
-            deli_id: false,
-            canton_id: false,
-            Canton: true,
-            Deliverable: {
-                select: {
-                    Action: {
-                        select: {
-                            name: true
-                        }//Fin select
-                    },
-                    Userr: {
-                        select: {
-                            Party: {
-                                select: {
-                                    name: true
-                                }//Fin select
-                            },
-                        }//Fin select
-                    },
-                }//Fin select deliver
-            },
-        }
-
-    })
-
-    const result = await prisma11.$queryRaw `SELECT * FROM qr3Max`
+    console.time('loop');
+    const result = await prisma.$queryRaw`SELECT * FROM qr3Max`
     console.log(result)
-
+    const result2 = await prisma.$queryRaw`SELECT * FROM qr3Min`
+    console.log(result2)
+    console.timeEnd('loop');
 }
 
 
