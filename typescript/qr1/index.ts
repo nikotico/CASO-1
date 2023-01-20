@@ -21,7 +21,7 @@ async function consulta(canton) {
     // make sure that any items are correctly URL encoded in the connection string
     await sql.connect(sqlConfig)
     let result = await sql.query('exec qr1 @canton = ' + canton)
-
+    
     console.dir(result)
   } catch (err) {
     console.dir(err)
